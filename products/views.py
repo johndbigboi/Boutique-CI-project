@@ -1,5 +1,18 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.contrib import messages
+from django.db.models import Q
 from .models import Product
+"""
+Jango.db.models called Q to generate a search query.
+This deserves a bit of an explanation.
+In Jango if you use something like product.objects.filter
+In order to filter a list of products. Everything will be ended together.
+In the case of our queries that would mean that when a user submits a query.
+In order for it to match the term would have to appear in both the product name and the product description.
+Instead, we want to return results where the query was matched in either
+the product name or the description.
+In order to accomplish this or logic, we need to use Q
+"""
 
 # Create your views here.
 
@@ -8,9 +21,32 @@ def all_products(request):
     """ A view to show all products, including sorting and search queries """
 
     products = Product.objects.all()
+    query = None
+    """
+    we'll start with it as none at the top of this view to ensure we don't get an error
+    when loading the products page without a search term.
+    """
+    if request.GET:
+        if 'q' in request.GET:
+            query = request.GET['q']
+            if not query:
+                messages.error(
+                    request, "You didn't enter any search criteria!")
+                return redirect(reverse('products'))
+            """
+            the code using Q is actually quite simple.
+            I'll set a variable equal to a Q object. Where the name contains the query.
+            Or the description contains the query.
+            The pipe here is what generates the or statement.
+            And the i in front of contains makes the queries case insensitive.
+            """
+            queries = Q(name__icontains=query) | Q(
+                description__icontains=query)
+            products = products.filter(queries)
 
     context = {
         'products': products,
+        'search_term': query,
     }
 
     return render(request, 'products/products.html', context)
