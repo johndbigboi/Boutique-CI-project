@@ -76,6 +76,10 @@ With the white background and a z-index of negative 1 to make sure that it sits 
     z-index: -1;
 }
 
+a.category-badge>span.badge:hover {
+    background: #212529 !important;
+    color: #fff !important;
+}
 
 /* -------------------------------- Media Queries */
 
