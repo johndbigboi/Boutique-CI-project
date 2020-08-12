@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+<!-- But before we finish I'm going to add that page header block from our base template.
+Inside this block, will just be a container with a class of header-container.
+Which contains a single row in an empty column. -->
+{% block page_header %}
+<div class="container header-container">
+    <div class="row">
+        <div class="col"></div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            {{ products}}
+        </div>
+    </div>
+</div>
+{% endblock %}
