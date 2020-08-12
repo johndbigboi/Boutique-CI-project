@@ -23,11 +23,32 @@ def all_products(request):
     products = Product.objects.all()
     query = None
     categories = None
+    sort = None
+    direction = None
     """
     we'll start with it as none at the top of this view to ensure we don't get an error
     when loading the products page without a search term.
     """
+
     if request.GET:
+        if 'sort' in request.GET:  # To review this code, first we check whether sort is in request.get
+            # If it is. We set it equal to both sort which will be none at this point. And sortkey
+            sortkey = request.GET['sort']
+            sort = sortkey
+            if sortkey == 'name':
+                # Then we rename sortkey to lower_name In the event, the user is sorting by name.
+                sortkey = 'lower_name'
+                # Then we annotate the current list of products with a new field.
+                products = products.annotate(lower_name=Lower('name'))
+    #
+            if 'direction' in request.GET:
+                direction = request.GET['direction']
+                # And check whether the direction is descending in order to decide whether to reverse the order.
+                if direction == 'desc':
+                    sortkey = f'-{sortkey}'
+            # Finally in order to actually sort the products all we need to do is use the order by model method.
+            products = products.order_by(sortkey)
+
         if 'category' in request.GET:
             categories = request.GET['category'].split(',')
             products = products.filter(category__name__in=categories)
@@ -61,10 +82,14 @@ Let's call that list of category objects, current_categories.
                 description__icontains=query)
             products = products.filter(queries)
 
+    # return the current sorting methodology to the template.
+    current_sorting = f'{sort}_{direction}'
+
     context = {
         'products': products,
         'search_term': query,
         'current_categories': categories,
+        'current_sorting': current_sorting,
     }
 
     return render(request, 'products/products.html', context)
