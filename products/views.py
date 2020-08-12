@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
 from django.db.models import Q
-from .models import Product
+from .models import Product, Category
 """
 Jango.db.models called Q to generate a search query.
 This deserves a bit of an explanation.
@@ -22,11 +22,28 @@ def all_products(request):
 
     products = Product.objects.all()
     query = None
+    categories = None
     """
     we'll start with it as none at the top of this view to ensure we don't get an error
     when loading the products page without a search term.
     """
     if request.GET:
+        if 'category' in request.GET:
+            categories = request.GET['category'].split(',')
+            products = products.filter(category__name__in=categories)
+            categories = Category.objects.filter(name__in=categories)
+            """
+            double underscore syntax is common when making queries in django.
+Using it here means we're looking for the name field of the category model.
+And we're able to do this because category and product are related with a foreign key.
+
+            This might seem redundant but remember that by doing this
+we're converting the list of strings of category names passed through the URL
+into a list of actual category objects, so that we can access all their fields in the template.
+Let's call that list of category objects, current_categories.
+
+            """
+
         if 'q' in request.GET:
             query = request.GET['q']
             if not query:
@@ -47,6 +64,7 @@ def all_products(request):
     context = {
         'products': products,
         'search_term': query,
+        'current_categories': categories,
     }
 
     return render(request, 'products/products.html', context)
