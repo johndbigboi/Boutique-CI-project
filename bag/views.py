@@ -24,9 +24,8 @@ def add_to_bag(request, item_id):
     request.session['bag'] = bag
 
     return redirect(redirect_url)
-    """
-    We'll submit the form to this view including the product id and the quantity.
+
+    """ We'll submit the form to this view including the product id and the quantity.
     Once in the view we'll get the bag variable if it exists in the session or create it if it doesn't.
     And finally we'll add the item to the bag or update the quantity if it already exists.
-    And then overwrite the variable in the session with the updated version.
-    """
+    And then overwrite the variable in the session with the updated version. """
