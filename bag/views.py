@@ -22,7 +22,7 @@ def add_to_bag(request, item_id):
         bag[item_id] = quantity
 
     request.session['bag'] = bag
-    print(request.session['bag'])
+
     return redirect(redirect_url)
     """
     We'll submit the form to this view including the product id and the quantity.
