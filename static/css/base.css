@@ -61,6 +61,13 @@ body {
     background-color: #000 !important;
 }
 
+.btn-outline-black {
+    background: white;
+    color: black !important;
+    /* use important to override link colors for <a> elements */
+    border: 1px solid black;
+}
+
 /**
 * add that here at the top and then jump to base.css and add its CSS. It's going to be a 100% height and width div. Fixed at the top left of the screen.
 With the white background and a z-index of negative 1 to make sure that it sits behind all the content.
