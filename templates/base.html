@@ -94,7 +94,7 @@ the main search bar, and the accountant shopping bag links. -->
                             <a href="" class="dropdown-item">Product Management</a>
                             {% endif %}
                             <!-- If the user is authenticated we want to display a drop-down item for their profile and a link to logout. -->
-                            <a href="" class="dropdown-item">My Profile</a>
+                            <a href="{% url 'profile' %}" class="dropdown-item">My Profile</a>
                             <!--  coming from the allauth URLs we included in the project level urls.py account_logout,account_signup and account_login -->
                             <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
                             {% else %}

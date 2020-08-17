@@ -5,8 +5,6 @@ from django.dispatch import receiver
 
 from django_countries.fields import CountryField
 
-# Create your models here.
-
 
 class UserProfile(models.Model):
     """
@@ -27,9 +25,8 @@ class UserProfile(models.Model):
         max_length=80, null=True, blank=True)
     default_county = models.CharField(max_length=80, null=True, blank=True)
 
-
-def __str__(self):
-    return self.user.username
+    def __str__(self):
+        return self.user.username
 
 
 """
