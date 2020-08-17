@@ -1,0 +1,7 @@
+.profile-form-input .form-control {
+    color: #000;
+}
+
+.profile-form-input::placeholder {
+    color: #aab7c4;
+}
