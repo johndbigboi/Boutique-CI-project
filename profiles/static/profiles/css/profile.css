@@ -1,7 +1,27 @@
-.profile-form-input .form-control {
+/* 
+And that's just to give it a max height in case the user has a lot of orders.
+This 416 pixels is the height of the form and the submit button in the adjacent column so above that height,
+the order history area will have a scrollbar.
+*/
+.order-history {
+    max-height: 416px;
+    /* height of profile form + submit button */
+    overflow-y: auto;
+}
+
+#profile-update-form .form-control {
     color: #000;
 }
 
-.profile-form-input::placeholder {
+#profile-update-form input::placeholder {
+    color: #aab7c4;
+}
+
+#id_default_country,
+#id_default_country option:not(:first-child) {
+    color: #000;
+}
+
+#id_default_country option:first-child {
     color: #aab7c4;
 }
