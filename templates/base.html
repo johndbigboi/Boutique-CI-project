@@ -91,7 +91,7 @@ the main search bar, and the accountant shopping bag links. -->
                             {% if request.user.is_authenticated %}
                             <!-- user is authenticated and a superuser. -->
                             {% if request.user.is_superuser %}
-                            <a href="" class="dropdown-item">Product Management</a>
+                            <a href="{% url 'add_product' %}" class="dropdown-item">Product Management</a>
                             {% endif %}
                             <!-- If the user is authenticated we want to display a drop-down item for their profile and a link to logout. -->
                             <a href="{% url 'profile' %}" class="dropdown-item">My Profile</a>
